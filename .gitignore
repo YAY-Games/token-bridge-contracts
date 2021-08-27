@@ -100,5 +100,26 @@ dist
 # DynamoDB Local files
 .dynamodb/
 
+# Privated key
+.privateKey
+
+# IDE
+.idea/
+idea/
+.vscode/
+
+# Other
+.gas-report.txt
+build/
+bin/
+.DS_Store
+
 # TernJS port file
 .tern-port
+
+node_modules
+
+# Hardhat files
+cache
+artifacts
+coverage.json

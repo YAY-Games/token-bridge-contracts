@@ -1,0 +1,34 @@
+{
+  "name": "token-bridge-contracts",
+  "version": "1.0.0",
+  "description": "",
+  "main": ".solcover.js",
+  "scripts": {
+    "build": "npx hardhat compile",
+    "test": "npx hardhat test",
+    "coverage": "npx hardhat coverage",
+    "lint": "npx solhint contracts/*.sol"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/YAY-Games/token-bridge-contracts.git"
+  },
+  "keywords": [],
+  "author": "YAY-Games",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/YAY-Games/token-bridge-contracts/issues"
+  },
+  "homepage": "https://github.com/YAY-Games/token-bridge-contracts#readme",
+  "devDependencies": {
+    "@nomiclabs/hardhat-truffle5": "^2.0.0",
+    "@nomiclabs/hardhat-web3": "^2.0.0",
+    "@openzeppelin/contracts": "^3.3.0",
+    "@openzeppelin/test-helpers": "^0.5.13",
+    "dotenv": "^10.0.0",
+    "hardhat": "^2.6.0",
+    "solhint": "^3.3.6",
+    "solidity-coverage": "^0.7.13",
+    "web3": "^1.5.1"
+  }
+}
