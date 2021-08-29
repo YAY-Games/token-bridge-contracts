@@ -18,9 +18,9 @@ contract BSCSwapAgentImpl is Context, Initializable {
     uint256 public swapFee;
 
     event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);
-    event SwapPairRegister(address indexed sponsor,address indexed erc20Addr, string name, string symbol, uint8 decimals);
-    event SwapStarted(address indexed erc20Addr, address indexed fromAddr, uint256 amount, uint256 feeAmount);
-    event SwapFilled(address indexed erc20Addr, bytes32 indexed avaxTxHash, address indexed toAddress, uint256 amount);
+    event SwapPairRegister(address indexed sponsor, address indexed bscTokenAddr, string name, string symbol, uint8 decimals);
+    event SwapStarted(address indexed bscTokenAddr, address indexed fromAddr, uint256 amount, uint256 feeAmount);
+    event SwapFilled(address indexed bscTokenAddr, bytes32 indexed avaxTxHash, address indexed toAddress, uint256 amount);
 
     constructor() public {}
 
@@ -56,43 +56,43 @@ contract BSCSwapAgentImpl is Context, Initializable {
         swapFee = fee;
     }
 
-    function registerSwapPairToAVAX(address erc20Addr) external onlyOwner returns(bool) {
-        require(!registeredERC20[erc20Addr], "AVAXSwapAgentImpl: already registered");
+    function registerSwapPairToAVAX(address bscTokenAddr) external onlyOwner returns(bool) {
+        require(!registeredERC20[bscTokenAddr], "AVAXSwapAgentImpl: already registered");
 
-        string memory name = IERC20Query(erc20Addr).name();
-        string memory symbol = IERC20Query(erc20Addr).symbol();
-        uint8 decimals = IERC20Query(erc20Addr).decimals();
+        string memory name = IERC20Query(bscTokenAddr).name();
+        string memory symbol = IERC20Query(bscTokenAddr).symbol();
+        uint8 decimals = IERC20Query(bscTokenAddr).decimals();
 
         require(bytes(name).length > 0, "AVAXSwapAgentImpl: empty name");
         require(bytes(symbol).length > 0, "AVAXSwapAgentImpl: empty symbol");
 
-        registeredERC20[erc20Addr] = true;
+        registeredERC20[bscTokenAddr] = true;
 
-        emit SwapPairRegister(msg.sender, erc20Addr, name, symbol, decimals);
+        emit SwapPairRegister(msg.sender, bscTokenAddr, name, symbol, decimals);
         return true;
     }
 
-    function fillAVAX2BSCSwap(bytes32 avaxTxHash, address erc20Addr, address toAddress, uint256 amount) external onlyOwner returns(bool) {
+    function fillAVAX2BSCSwap(bytes32 avaxTxHash, address bscTokenAddr, address toAddress, uint256 amount) external onlyOwner returns(bool) {
         require(!filledAVAXTx[avaxTxHash], "BSCSwapAgentImpl: bsc tx filled already");
-        require(registeredERC20[erc20Addr], "BSCSwapAgentImpl: not registered token");
+        require(registeredERC20[bscTokenAddr], "BSCSwapAgentImpl: not registered token");
 
         filledAVAXTx[avaxTxHash] = true;
-        IERC20(erc20Addr).safeTransfer(toAddress, amount);
+        IERC20(bscTokenAddr).safeTransfer(toAddress, amount);
 
-        emit SwapFilled(erc20Addr, avaxTxHash, toAddress, amount);
+        emit SwapFilled(bscTokenAddr, avaxTxHash, toAddress, amount);
         return true;
     }
 
-    function swapBSC2AVAX(address erc20Addr, uint256 amount) external payable notContract returns(bool) {
-        require(registeredERC20[erc20Addr], "BSCSwapAgentImpl: not registered token");
+    function swapBSC2AVAX(address bscTokenAddr, uint256 amount) external payable notContract returns(bool) {
+        require(registeredERC20[bscTokenAddr], "BSCSwapAgentImpl: not registered token");
         require(msg.value == swapFee, "BSCSwapAgentImpl: swap fee not equal");
 
-        IERC20(erc20Addr).safeTransferFrom(msg.sender, address(this), amount);
+        IERC20(bscTokenAddr).safeTransferFrom(msg.sender, address(this), amount);
         if (msg.value != 0) {
             owner.transfer(msg.value);
         }
 
-        emit SwapStarted(erc20Addr, msg.sender, amount, msg.value);
+        emit SwapStarted(bscTokenAddr, msg.sender, amount, msg.value);
         return true;
     }
 }
