@@ -2,7 +2,7 @@
   "name": "token-bridge-contracts",
   "version": "1.0.0",
   "description": "",
-  "main": ".solcover.js",
+  "main": "",
   "scripts": {
     "build": "npx hardhat compile",
     "test": "npx hardhat test",
@@ -15,7 +15,7 @@
   },
   "keywords": [],
   "author": "YAY-Games",
-  "license": "ISC",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/YAY-Games/token-bridge-contracts/issues"
   },

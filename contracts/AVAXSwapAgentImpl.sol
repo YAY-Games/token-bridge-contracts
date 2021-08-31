@@ -78,7 +78,7 @@ contract AVAXSwapAgentImpl is Context, Initializable {
         return address(token);
     }
 
-    function fillBSC2AVAXSwap(bytes32 bscTxHash, address bscTokenAddr, address toAddress, uint256 amount) onlyOwner external returns (bool) {
+    function fillBSC2AVAXSwap(bytes32 bscTxHash, address bscTokenAddr, address toAddress, uint256 amount) external onlyOwner returns (bool) {
         require(!filledBSCTx[bscTxHash], "AVAXSwapAgentImpl: bsc tx filled already");
         address avaxTokenAddr = swapMappingBSC2AVAX[bscTokenAddr];
         require(avaxTokenAddr != address(0), "AVAXSwapAgentImpl: no swap pair for this token");
