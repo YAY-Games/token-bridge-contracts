@@ -38,7 +38,8 @@ Once swap pair is registered, users can swap tokens from BSC to AVAX.
 
 ### Deployed contracts
 
-- Coming soon
+- BSC: https://bscscan.com/address/0x320f93Cd60e85F91289533FE45D031A35426c5D8/
+- AVAX: https://cchain.explorer.avax.network/address/0x038Cf43b3292cb3B43e09722302D68798480e6e6/
 
 ## Installation & Usage
 
