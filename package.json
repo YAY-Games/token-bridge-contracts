@@ -21,6 +21,7 @@
   },
   "homepage": "https://github.com/YAY-Games/token-bridge-contracts#readme",
   "devDependencies": {
+    "@nomiclabs/hardhat-etherscan": "^2.1.7",
     "@nomiclabs/hardhat-truffle5": "^2.0.0",
     "@nomiclabs/hardhat-web3": "^2.0.0",
     "@openzeppelin/contracts": "^3.3.0",
