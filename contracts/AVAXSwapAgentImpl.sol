@@ -35,23 +35,11 @@ contract AVAXSwapAgentImpl is Context, Initializable {
         _;
     }
 
-    modifier notContract() {
-        require(!isContract(msg.sender), "contract is not allowed to swap");
-        require(msg.sender == tx.origin, "no proxy contract is allowed");
-       _;
-    }
-
     function initialize(address avaxTokenImpl, uint256 fee, address payable ownerAddr, address avaxTokenProxyAdminAddr) public initializer {
         avaxTokenImplementation = avaxTokenImpl;
         swapFee = fee;
         owner = ownerAddr;
         avaxTokenProxyAdmin = avaxTokenProxyAdminAddr;
-    }
-
-    function isContract(address addr) internal view returns (bool) {
-        uint size;
-        assembly { size := extcodesize(addr) }
-        return size > 0;
     }
 
     function transferOwnership(address payable newOwner) external onlyOwner {
@@ -89,7 +77,7 @@ contract AVAXSwapAgentImpl is Context, Initializable {
         return true;
     }
 
-    function swapAVAX2BSC(address avaxTokenAddr, uint256 amount) external payable notContract returns (bool) {
+    function swapAVAX2BSC(address avaxTokenAddr, uint256 amount) external payable returns (bool) {
         address bscTokenAddr = swapMappingAVAX2BSC[avaxTokenAddr];
         require(bscTokenAddr != address(0), "AVAXSwapAgentImpl: no swap pair for this token");
         require(msg.value == swapFee, "AVAXSwapAgentImpl: swap fee not equal");

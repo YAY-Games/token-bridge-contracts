@@ -34,18 +34,6 @@ contract BSCSwapAgentImpl is Context, Initializable {
         owner = ownerAddr;
     }
 
-    modifier notContract() {
-        require(!isContract(msg.sender), "contract is not allowed to swap");
-        require(msg.sender == tx.origin, "no proxy contract is allowed");
-       _;
-    }
-
-    function isContract(address addr) internal view returns(bool) {
-        uint size;
-        assembly { size := extcodesize(addr) }
-        return size > 0;
-    }
-
     function transferOwnership(address payable newOwner) external onlyOwner {
         require(newOwner != address(0), "Ownable: new owner is the zero address");
         emit OwnershipTransferred(owner, newOwner);
@@ -83,7 +71,7 @@ contract BSCSwapAgentImpl is Context, Initializable {
         return true;
     }
 
-    function swapBSC2AVAX(address bscTokenAddr, uint256 amount) external payable notContract returns(bool) {
+    function swapBSC2AVAX(address bscTokenAddr, uint256 amount) external payable returns(bool) {
         require(registeredERC20[bscTokenAddr], "BSCSwapAgentImpl: not registered token");
         require(msg.value == swapFee, "BSCSwapAgentImpl: swap fee not equal");
 
